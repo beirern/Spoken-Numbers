@@ -1,5 +1,5 @@
 import boto3
-import os
+from typing import List
 
 from dotenv import load_dotenv
 
@@ -12,7 +12,7 @@ class Speaker:
             region_name='us-east-1'
         )
 
-    def text_to_ssml(self, punches: list[str], pauses: list[int]) -> str:
+    def text_to_ssml(self, punches: List[str], pauses: List[int]) -> str:
         ssml_text = ""
         for count, combo in enumerate(punches):
             if count != len(punches) - 1:
@@ -24,7 +24,7 @@ class Speaker:
                 ssml_text += '<say-as interpret-as="digits">{}</say-as>'.format(combo)
         return "<speak>{}</speak>".format(ssml_text)
 
-    def speak(self, punches: list[str], pauses: list[int]) -> str:
+    def speak(self, punches: List[str], pauses: List[int]) -> str:
         ssml_text = self.text_to_ssml(punches, pauses)
         response = self.client.start_speech_synthesis_task(
             Engine='standard',
