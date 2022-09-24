@@ -7,5 +7,4 @@ app = Flask(__name__)
 def boxing():
   combos = request.args.get('combos', type=int)
   rounds = request.args.get('rounds', type=int)
-  boxing_combination(combos, rounds)
-  return "Hi!"
+  return boxing_combination(combos, rounds)
