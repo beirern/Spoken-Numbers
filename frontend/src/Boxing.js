@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
-
+import useSound from 'use-sound';
 class Boxing extends Component {
   constructor(props) {
     super(props);
@@ -22,10 +22,10 @@ class Boxing extends Component {
   handleSubmit(event) {
     event.preventDefault();
     // TODO: Factor out the server host and port
-    axios.get(`http://54.197.75.153:5000/boxing?combos=${parseInt(this.state.comboNumber)}&rounds=${parseInt(this.state.time)}`)
+    axios.get(`http://localhost:5000/boxing?combos=${parseInt(this.state.comboNumber)}&rounds=${parseInt(this.state.time)}`)
     .then((res) => {
-        console.log(res)
-        alert(res.data);
+        console.log(res);
+        alert(res.data.s3_url);
       }).catch(
       (err) => {
         console.log(err)
