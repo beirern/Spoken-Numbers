@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import axios from 'axios';
 
 class Boxing extends Component {
   constructor(props) {
@@ -11,15 +12,25 @@ class Boxing extends Component {
   }
 
   handleComboChange(event) {
-    this.setState({ comboNumber: event.target.value })
+    this.setState({ comboNumber: event.target.value });
   }
 
   handleTimeChange(event) {
-    this.setState({ time: event.target.value })
+    this.setState({ time: event.target.value });
   }
 
   handleSubmit(event) {
-    alert('Combos: ' + this.state.comboNumber + ' Time: ' + this.state.time)
+    event.preventDefault();
+    // TODO: Factor out the server host and port
+    axios.get(`http://54.197.75.153:5000/boxing?combos=${parseInt(this.state.comboNumber)}&rounds=${parseInt(this.state.time)}`)
+    .then((res) => {
+        console.log(res)
+        alert(res.data);
+      }).catch(
+      (err) => {
+        console.log(err)
+      });
+    //alert('Combos: ' + this.state.comboNumber + ' Time: ' + this.state.time);
   }
 
   render() {
