@@ -38,15 +38,14 @@ class Speaker:
         )
 
         last_index = response['SynthesisTask']['OutputUri'].rindex('/')
-        object_key = response['SynthesisTask']['OutputUri'][last_index:]
-        print(object_key)
-        # self.client.generate_presigned_url(
-        #     ClientMethod='get_object',
-        #     Params={
-        #         'Bucket':'speaking-website',
-        #         'Key': response['Key']
-        #     },
-        #     ExpiresIn=3600
-        # )
+        object_key = response['SynthesisTask']['OutputUri'][last_index+1:]
+        presigned_url = self.client.generate_presigned_url(
+            ClientMethod='get_object',
+            Params={
+                'Bucket':'speaking-website',
+                'Key': object_key
+            },
+            ExpiresIn=3600
+        )
 
-        return response['SynthesisTask']['OutputUri']
+        return presigned_url

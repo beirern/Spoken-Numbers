@@ -28,9 +28,9 @@ def boxing_combination(num_punches: int, num_rounds: int) -> None:
     punches.append(combo)
 
   pause_times.pop()  
-  s3_uri = speaker.speak(punches, pause_times)
+  s3_url = speaker.speak(punches, pause_times)
 
-  response = jsonify({'s3_uri': s3_uri})
+  response = jsonify({'s3_url': s3_url})
   response.headers.add('Access-Control-Allow-Origin', '*')
   
   return response
