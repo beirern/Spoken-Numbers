@@ -25,7 +25,13 @@ class Boxing extends Component {
     axios.get(`http://localhost:5000/boxing?combos=${parseInt(this.state.comboNumber)}&rounds=${parseInt(this.state.time)}`)
     .then((res) => {
         console.log(res);
-        alert(res.data.s3_url);
+        const presigned_url = res.data.presigned_url;
+        axios.get(presigned_url)
+        .then((res) => {
+          console.log(res);
+        }).catch((err) => {
+          console.log(err);
+        });
       }).catch(
       (err) => {
         console.log(err)
