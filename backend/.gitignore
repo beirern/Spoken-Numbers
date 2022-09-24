@@ -3,3 +3,4 @@ output.mp3
 *.swp
 __pycache__/
 .flaskenv
+.env
