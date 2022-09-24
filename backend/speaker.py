@@ -1,6 +1,7 @@
 import boto3
-from typing import List
+import os
 
+from typing import List
 from dotenv import load_dotenv
 
 class Speaker:
