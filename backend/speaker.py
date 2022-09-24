@@ -25,7 +25,7 @@ class Speaker:
                 ssml_text += '<say-as interpret-as="digits">{}</say-as>'.format(combo)
         return "<speak>{}</speak>".format(ssml_text)
 
-    def speak(self, punches: List[str], pauses: List[int]) -> str:
+    def generate_mp3(self, punches: List[str], pauses: List[int]) -> str:
         ssml_text = self.text_to_ssml(punches, pauses)
         response = self.client.start_speech_synthesis_task(
             Engine='standard',
@@ -37,15 +37,4 @@ class Speaker:
             VoiceId='Joey'
         )
 
-        last_index = response['SynthesisTask']['OutputUri'].rindex('/')
-        object_key = response['SynthesisTask']['OutputUri'][last_index+1:]
-        presigned_url = self.client.generate_presigned_url(
-            ClientMethod='get_object',
-            Params={
-                'Bucket':'speaking-website',
-                'Key': object_key
-            },
-            ExpiresIn=3600
-        )
-
-        return presigned_url
+        return response['SynthesisTask']['OutputUri']

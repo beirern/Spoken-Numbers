@@ -3,6 +3,7 @@ import random as rand
 from flask import jsonify
 
 from speaker import Speaker
+from s3 import S3
 
 PUNCHES = list(range(1,7)) # Punching numbers, 1-6
 # TODO: MAKE THIS A FLOAT
@@ -28,10 +29,12 @@ def boxing_combination(num_punches: int, num_rounds: int) -> None:
     punches.append(combo)
 
   pause_times.pop()  
-  s3_url = speaker.speak(punches, pause_times)
+  s3_uri = speaker.generate_mp3(punches, pause_times)
+  
+  s3 = S3()
+  presigned_url = s3.get_presigned_url(s3_uri, 'speaking-website')
 
-  response = jsonify({'s3_url': s3_url})
-  response.headers.add('Access-Control-Allow-Origin', '*')
+  response = jsonify({'presigned_url': presigned_url})
   
   return response
 
