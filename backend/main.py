@@ -1,5 +1,6 @@
 import math
 import random as rand
+from flask import jsonify
 
 from speaker import Speaker
 
@@ -29,6 +30,9 @@ def boxing_combination(num_punches: int, num_rounds: int) -> None:
   pause_times.pop()  
   s3_uri = speaker.speak(punches, pause_times)
 
-  return s3_uri
+  response = jsonify({'s3_uri': s3_uri})
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  
+  return response
 
   
