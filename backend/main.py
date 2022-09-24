@@ -1,6 +1,5 @@
 import math
 import random as rand
-from signal import pause
 
 from speaker import Speaker
 
